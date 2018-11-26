@@ -4,14 +4,12 @@ Created on Mon Nov 26 16:36:53 2018
 @author: johannes
 """
 
-
-
 import numpy as np
 items = np.array(['cake', 'plant', 'TV', 'pepernoten'])
 
 
 
-# Our Method for 2 bags
+# Our new method for 2 bags
 def weirdPowerSet(items):
     """ try to stick to the binary solution, but instead
         1. draw more numbers/binary combinations   2**(N*2) instead of 2**N
@@ -23,10 +21,9 @@ def weirdPowerSet(items):
             so, with 4 items we need 2*4=8 bits of information
             so, we use   np.binary_repr(16, 8) = '00010000'   in order to pad zeros to get 8 bits
         3. we have to avoid a situation in which we put an item into both bags at once
-        4. similarly we have to avoid a situation in
         
         Caveat: building a generator would be awkward because 
-            you have to yield a result every time 
+            you have to yield a result every time (but see powerSet2_1)
         """
     N = len(items)
     combo = []
@@ -61,6 +58,8 @@ def weirdPowerSet(items):
 
 
 pSet, x = weirdPowerSet(items)
+
+
 
 
 
@@ -102,6 +101,8 @@ gs_pSet = powerSet2_1(items)
 
 
 
+
+
 # Verification 1
 if ((2**(len(items)*2)) - x) == (3**len(items)):
     print("Success1: \t Both implementations resulted in the same number of combinations.")
@@ -110,16 +111,11 @@ else:
     print("Fail1: \t The two implementations resulted in a different number of combinations.")
     print(str((2**(len(items)*2)) - x) + " = 2**(N*2) != " + str(3**len(items)) + " = 3**N")
 
-
-
-
 # Verification 2
 if sorted(pSet) == sorted(gs_pSet):
     print("Success2: \t Both implementations resulted in identical combinations.")
 else:
     print("Fail2: \t The two implementations did NOT result in identical combinations.")
-    
-    
     
     
     
@@ -133,8 +129,7 @@ def powerSet2_1(items):
     
     for i in range(len(comboI)):
         yield ([items[comboI[i][0]], items[comboI[i][1]]])
-    
-    
+        
     
 pGen = powerSet2_1(items)
 for i in range(3**len(items)):
